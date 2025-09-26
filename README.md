@@ -61,14 +61,15 @@
 - /signup
 - /login
 - /app
-  - /home
+  - /breaker
     - Add breakers
     - Manage profile
     - Current day form
     - Total calender
     - Graphs
-  - /breaker/[breaker]
+  - /breakers/[breaker]
     - Update
     - Delete
     - Calender
-  -
+  - /calendar/[date]
+    - Edit single day for all Breakers

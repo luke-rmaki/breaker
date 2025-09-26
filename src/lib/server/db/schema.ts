@@ -1,4 +1,6 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const breaker = sqliteTable("breaker", {
 	id: text("id").primaryKey(),
@@ -16,6 +18,12 @@ export const breaker = sqliteTable("breaker", {
 		.references(() => user.id, { onDelete: "set null" }),
 });
 
+export const BreakerSchemaSel = createSelectSchema(breaker);
+export const BreakerSchemaIns = createInsertSchema(breaker);
+
+export type SelectClassification = InferSelectModel<typeof classification>;
+export type InsertClassification = InferInsertModel<typeof classification>;
+
 export const classification = sqliteTable("classification", {
 	id: text("id").primaryKey(),
 	breaker_id: text("breaker_id")
@@ -26,6 +34,9 @@ export const classification = sqliteTable("classification", {
 	level: integer("level").notNull(),
 	description: text("description"),
 });
+
+export type SelectDay = InferSelectModel<typeof day>;
+export type InsertDay = InferInsertModel<typeof day>;
 
 export const day = sqliteTable("day", {
 	id: text("id").primaryKey(),
@@ -38,6 +49,9 @@ export const day = sqliteTable("day", {
 		.references(() => classification.id, { onDelete: "set null" }),
 });
 
+export type SelectMotivation = InferSelectModel<typeof motivation>;
+export type InsertMotivation = InferInsertModel<typeof motivation>;
+
 export const motivation = sqliteTable("motivation", {
 	id: text("id").primaryKey(),
 	breaker_id: text("breaker_id")
@@ -47,6 +61,9 @@ export const motivation = sqliteTable("motivation", {
 	description: text("description"),
 	picture: text("picture"),
 });
+
+export type SelectNotification = InferSelectModel<typeof notification>;
+export type InsertNotification = InferInsertModel<typeof notification>;
 
 export const notification = sqliteTable("notification", {
 	id: text("id").primaryKey(),
@@ -76,7 +93,7 @@ export const user = sqliteTable("user", {
 		.defaultNow()
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
-	type: text("type").notNull().default('user'), // 'user' | 'support'
+	type: text("type").notNull().default("user"), // 'user' | 'support'
 	profilePicture: text("profile_picture"),
 });
 

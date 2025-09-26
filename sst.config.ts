@@ -6,7 +6,7 @@ export default $config({
     return {
       name: "breaker",
       removal: input?.stage === "production" ? "retain" : "remove",
-      protect: ["production"].includes(input?.stage),
+      // protect: ["production"].includes(input?.stage),
       home: "aws",      
       providers: {
         aws: {
@@ -17,6 +17,14 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.SvelteKit("BreakerWeb");
+    const bucket = new sst.aws.Bucket("BreakerBucket", {
+      access: "public"
+    });
+    const email = new sst.aws.Email("BreakerEmail", {
+      sender: "admin@rmaki.com"
+  });
+    new sst.aws.SvelteKit("BreakerWeb", {
+      link: [bucket, email],
+    }); 
   },
 });
