@@ -6,10 +6,10 @@ export const breaker = sqliteTable("breaker", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
 	created_at: integer("created_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.notNull(),
 	updated_at: integer("updated_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
 	user_id: text("user_id")
@@ -33,6 +33,7 @@ export const classification = sqliteTable("classification", {
 	emoji: text("emoji"),
 	level: integer("level").notNull(),
 	description: text("description"),
+	default: integer("default", { mode: "boolean" }).default(false).notNull(),
 });
 
 export type SelectDay = InferSelectModel<typeof day>;
@@ -87,10 +88,10 @@ export const user = sqliteTable("user", {
 		.notNull(),
 	image: text("image"),
 	createdAt: integer("created_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.notNull(),
 	updatedAt: integer("updated_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
 	type: text("type").notNull().default("user"), // 'user' | 'support'
@@ -102,7 +103,7 @@ export const session = sqliteTable("session", {
 	expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
 	token: text("token").notNull().unique(),
 	createdAt: integer("created_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.notNull(),
 	updatedAt: integer("updated_at", { mode: "timestamp" })
 		.$onUpdate(() => /* @__PURE__ */ new Date())
@@ -146,10 +147,10 @@ export const verification = sqliteTable("verification", {
 	value: text("value").notNull(),
 	expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
 	createdAt: integer("created_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.notNull(),
 	updatedAt: integer("updated_at", { mode: "timestamp" })
-		.defaultNow()
+		.default(new Date())
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
 });

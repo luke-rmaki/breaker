@@ -11,7 +11,6 @@
 		const name = form_data.get('name') as string;
 		const password = form_data.get('password') as string;
 
-		console.log('Form submitted:', { email, password });
 		const { data, error } = await auth_client.signUp.email(
 			{
 				email, // user email address

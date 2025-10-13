@@ -6,7 +6,7 @@ export async function load() {
   const { data: session } = await auth_client.getSession();
 
   if (session) {
-    throw redirect(302, "/app/home");
+    throw redirect(302, "/breaker");
   }
 
   // No session, allow page to load for login
